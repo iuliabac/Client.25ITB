@@ -1,5 +1,5 @@
 import Express, { Router, Request, Response } from 'express';
-import { getOwner, getOwners } from '../controllers/clientsController.js';
+import { getOwner, getOwners , addOwner} from '../controllers/clientsController.js';
 import { getSpecies } from '../controllers/petsController.ts';
 const router: Router = Express.Router();
 
@@ -9,7 +9,10 @@ const router: Router = Express.Router();
 // });
 router.get('/owners', getOwners);
 router.get('/owners/:id', getOwner);
+router.post('/owners', addOwner);
+
 
 router.get('/pets/species', getSpecies);
+
 
 export default router;

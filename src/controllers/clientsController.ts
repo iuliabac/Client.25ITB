@@ -87,3 +87,36 @@ export async function getOwner(req: Request, res: Response): Promise<void> {
     });
   }
 }
+
+export async function addOwner(req: Request, res: Response):Promise<void> {
+  // const email = req.body.email;
+  // const name = req.body.name;
+  const {email, name} = req.body;
+  if (!email || !name) {
+    res.status(400).send({
+      error: {
+        message: "Missing fields",
+        code: "MISSING_FIELDS",
+        url: req.url
+      }
+    });
+    return;
+  }
+  try {
+    const newOwner = await prisma.owner.create({
+      data: {
+        email,
+        name
+      }
+    });
+    res.status(201).send(newOwner);
+  } catch (error) {
+    res.status(500).send({
+      error: {
+        message: "Failed to add owner",
+        code: "SERVER_ERROR",
+        url: req.url
+      }
+    })
+  }
+}
